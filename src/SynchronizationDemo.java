@@ -1,47 +1,42 @@
 class Table {
 
-    // Synchronized method
     synchronized void printTable(int n) {
         for (int i = 1; i <= 5; i++) {
-            System.out.print(n * i + " ");
+            System.out.print(n * i);
+            if (i < 5) {
+                System.out.print(" ");
+            }
         }
         System.out.println();
     }
 }
 
-class MyThread1 extends Thread {
+class MyThread extends Thread {
     Table t;
+    int num;
 
-    MyThread1(Table t) {
+    MyThread(Table t, int num) {
         this.t = t;
+        this.num = num;
     }
 
     public void run() {
-        t.printTable(5);
-    }
-}
-
-class MyThread2 extends Thread {
-    Table t;
-
-    MyThread2(Table t) {
-        this.t = t;
-    }
-
-    public void run() {
-        t.printTable(100);
+        t.printTable(num);
     }
 }
 
 public class SynchronizationDemo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        Table obj = new Table();   // Shared object
+        Table obj = new Table();
 
-        MyThread1 t1 = new MyThread1(obj);
-        MyThread2 t2 = new MyThread2(obj);
+        MyThread t1 = new MyThread(obj, 5);
+        MyThread t2 = new MyThread(obj, 100);
 
         t1.start();
+        t1.join();   // Ensures first completes fully
+
         t2.start();
+        t2.join();   // Ensures second completes fully
     }
 }
