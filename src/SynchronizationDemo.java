@@ -2,10 +2,7 @@ class Table {
 
     synchronized void printTable(int n) {
         for (int i = 1; i <= 5; i++) {
-            System.out.print(n * i);
-            if (i < 5) {
-                System.out.print(" ");
-            }
+            System.out.print(n * i + " ");  // KEEP trailing space
         }
         System.out.println();
     }
@@ -34,9 +31,9 @@ public class SynchronizationDemo {
         MyThread t2 = new MyThread(obj, 100);
 
         t1.start();
-        t1.join();   // Ensures first completes fully
+        t1.join();
 
         t2.start();
-        t2.join();   // Ensures second completes fully
+        t2.join();
     }
 }
