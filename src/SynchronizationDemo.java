@@ -3,7 +3,7 @@ class Table {
         for (int i = 1; i <= 5; i++) {
             System.out.print(n * i + " ");
         }
-        System.out.println(); // IMPORTANT: newline after each table
+        System.out.println();
     }
 }
 
@@ -22,20 +22,17 @@ class MyThread extends Thread {
 }
 
 public class SynchronizationDemo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Table obj = new Table();
 
         MyThread t1 = new MyThread(obj, 5);
         MyThread t2 = new MyThread(obj, 100);
 
         t1.start();
+        t1.join();   // force full completion
         t2.start();
+        t2.join();   // force full completion
 
-        try {
-            t1.join();
-            t2.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        System.out.println();  // 🔥 EXTRA newline at end (important)
     }
 }
