@@ -29,10 +29,11 @@ public class SynchronizationDemo {
         MyThread t2 = new MyThread(obj, 100);
 
         t1.start();
-        t1.join();   // force full completion
-        t2.start();
-        t2.join();   // force full completion
+        t1.join();   // ensure first thread finishes
 
-        System.out.println();  // 🔥 EXTRA newline at end (important)
+        t2.start();
+        t2.join();   // ensure second thread finishes
+
+        System.out.println(); // extra newline at end
     }
 }
